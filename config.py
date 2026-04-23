@@ -13,45 +13,29 @@ class VectorStoreType(str, Enum):
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
-    # LLM
     LLM_PROVIDER: LLMProvider = LLMProvider.OPENAI
     VLLM_ENDPOINT: str = "http://localhost:8001/v1"
     VLLM_MODEL: str = "mistralai/Mistral-7B-Instruct-v0.2"
     OPENAI_API_KEY: str = ""
     OPENAI_MODEL: str = "gpt-4-turbo-preview"
-
-    # Embeddings
     EMBEDDING_PROVIDER: str = "openai"
     EMBEDDING_MODEL: str = "text-embedding-3-small"
-
-    # Vector store
     VECTOR_STORE: VectorStoreType = VectorStoreType.CHROMA
     QDRANT_URL: str = "http://localhost:6333"
     CHROMA_PERSIST_DIR: str = "./data/chroma"
-
-    # Infrastructure
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_USER: str = "agent"
     POSTGRES_PASSWORD: str = "agentpass"
     POSTGRES_DB: str = "business_agent"
     DATABASE_URL: Optional[str] = None
-
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
     REDIS_URL: str = "redis://localhost:6379/0"
-
-    # CRM Integration
     CRM_BASE_URL: str = "https://example.kommo.com"
     CRM_API_KEY: str = ""
-
-    # Agent swarm
     AGENT_MAX_ITERATIONS: int = 8
-
-    # Rate limit
     RATE_LIMIT_PER_SECOND: int = 10
-
-    # Fine-tuning
     TRAINING_DATA_PATH: str = "./data/training/sales_conversations.jsonl"
     LORA_OUTPUT_DIR: str = "./models/lora-adapters"
 
