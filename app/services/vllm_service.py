@@ -18,12 +18,12 @@ class VLLMService:
         retry=retry_if_exception_type((openai.APIError, openai.APITimeoutError, openai.InternalServerError, ConnectionError)),
         reraise=True,
     )
-    async def acreate_chat_completion(self, messages, tools=None, **kwargs):
+    async def acreate_chat_completion(self, messages, tools=None, temperature=0.2, **kwargs):
         return await self.client.chat.completions.create(
             model=self.model,
             messages=messages,
             tools=tools,
-            temperature=kwargs.get("temperature", 0.2),
+            temperature=temperature,
         )
 
     async def get_embedding(self, text: str):

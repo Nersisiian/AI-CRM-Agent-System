@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+﻿from typing import List, Dict, Any, Optional
 import openai
 from openai import AsyncOpenAI
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
@@ -22,11 +22,12 @@ class OpenAIService:
         self,
         messages: List[Dict[str, Any]],
         tools: Optional[List[Dict[str, Any]]] = None,
+        temperature: float = 0.3,
     ) -> Any:
         kwargs = {
             "model": self.model,
             "messages": messages,
-            "temperature": 0.3,
+            "temperature": temperature,
         }
         if tools:
             kwargs["tools"] = tools
