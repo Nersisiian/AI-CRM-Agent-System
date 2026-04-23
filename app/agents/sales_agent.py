@@ -1,4 +1,4 @@
-from typing import Dict, Any
+﻿from typing import Dict, Any
 import structlog
 from app.agents.tools.crm_tools import CRMTools
 from app.rag.retrieval import RetrievalPipeline
@@ -21,7 +21,6 @@ class SalesAgent:
         history = await self.memory.get_history(session_id)
         history.append({"role": "user", "content": message})
 
-        # RAG контекст
         context = await self.rag.retrieve_context(message)
         if context:
             history.insert(0, {"role": "system", "content": f"База знаний:\n{context}"})
@@ -35,9 +34,8 @@ class SalesAgent:
             await self.memory.add_message(session_id, "assistant", reply)
             return {"response": reply, "sources": []}
 
-        # Agent loop с инструментами
         for _ in range(settings.AGENT_MAX_ITERATIONS):
-            response = await self.llm.acreate_chat_completion(messages=messages, tools=CRMTools.get_definitions_static())
+            response = await self.llm.acreate_chat_completion(messages=messages, tools=CRMTools.get_definitions())
             msg = response.choices[0].message
             if msg.tool_calls:
                 async with self.db_factory() as db:

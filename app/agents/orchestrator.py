@@ -1,3 +1,4 @@
+﻿from typing import Dict, Any
 import structlog
 from app.agents.sales_agent import SalesAgent
 from app.agents.support_agent import SupportAgent
@@ -20,8 +21,7 @@ class AgentOrchestrator:
         self.memory = memory
         self.llm = get_llm_service()
 
-    async def route(self, message: str, session_id: str) -> str:
-        # Классификация намерения
+    async def route(self, message: str, session_id: str) -> Dict[str, Any]:
         resp = await self.llm.acreate_chat_completion(
             messages=[
                 {"role": "system", "content": INTENT_PROMPT},
@@ -36,5 +36,4 @@ class AgentOrchestrator:
         elif intent == "support":
             return await self.support.process_message(message, session_id)
         else:
-            # general ответ без инструментов
             return await self.sales.process_message(message, session_id, use_tools=False)

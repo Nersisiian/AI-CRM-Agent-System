@@ -1,4 +1,4 @@
-import json
+﻿import json
 from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models import Customer, Lead, Deal
@@ -10,7 +10,8 @@ class CRMTools:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    def get_definitions(self):
+    @staticmethod
+    def get_definitions():
         return [
             {
                 "type": "function",

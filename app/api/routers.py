@@ -1,9 +1,10 @@
-import uuid
+﻿import uuid
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from app.models.chat import ChatRequest, ChatResponse
 from app.models.ingest import IngestResponse
 from app.agents.orchestrator import AgentOrchestrator
 from app.rag.ingestion import IngestionPipeline
+from app.rag.vector_store import VectorStore
 from app.api.deps import get_orchestrator, vector_store
 from app.utils.metrics import metrics_collector
 import structlog
@@ -22,7 +23,7 @@ async def chat(
         metrics_collector.increment("chat_requests")
         return ChatResponse(
             session_id=session_id,
-            response=result["response"],
+            response=result.get("response", ""),
             sources=result.get("sources", []),
         )
     except Exception as e:
@@ -34,8 +35,8 @@ async def chat(
 async def ingest(
     file: UploadFile = File(...),
 ):
-    if not file.filename.endswith(".pdf"):
-        raise HTTPException(400, "Only PDF")
+    if not file.filename or not file.filename.endswith(".pdf"):
+        raise HTTPException(400, "Only PDF files are supported")
     content = await file.read()
     pipeline = IngestionPipeline(vector_store)
     count = await pipeline.ingest_pdf(content, file.filename)

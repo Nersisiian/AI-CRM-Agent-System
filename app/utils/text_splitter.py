@@ -1,4 +1,4 @@
-import re
+﻿import re
 from typing import List
 
 class RecursiveCharacterTextSplitter:
@@ -51,7 +51,7 @@ class RecursiveCharacterTextSplitter:
 
     def _merge_splits(self, splits: List[str], separator: str) -> List[str]:
         docs = []
-        current_doc = []
+        current_doc: List[str] = []
         total = 0
         for d in splits:
             _len = len(d)

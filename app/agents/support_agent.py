@@ -1,5 +1,4 @@
-# Аналогичен sales_agent, но с другим системным промптом и набором инструментов
-from typing import Dict, Any
+﻿from typing import Dict, Any
 import structlog
 from app.agents.tools.crm_tools import CRMTools
 from app.rag.retrieval import RetrievalPipeline
@@ -27,7 +26,7 @@ class SupportAgent:
         messages = [{"role": "system", "content": SYSTEM_PROMPT_SUPPORT}] + history
 
         for _ in range(settings.AGENT_MAX_ITERATIONS):
-            response = await self.llm.acreate_chat_completion(messages=messages, tools=CRMTools.get_definitions_static())
+            response = await self.llm.acreate_chat_completion(messages=messages, tools=CRMTools.get_definitions())
             msg = response.choices[0].message
             if msg.tool_calls:
                 async with self.db_factory() as db:
