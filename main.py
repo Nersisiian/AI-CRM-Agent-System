@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI # CI trigger
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routers import api_router
