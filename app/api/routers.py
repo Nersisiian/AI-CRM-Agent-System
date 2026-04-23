@@ -4,8 +4,7 @@ from app.models.chat import ChatRequest, ChatResponse
 from app.models.ingest import IngestResponse
 from app.agents.orchestrator import AgentOrchestrator
 from app.rag.ingestion import IngestionPipeline
-from app.rag.vector_store import VectorStore
-from app.api.deps import get_orchestrator, get_crm_connector, vector_store
+from app.api.deps import get_orchestrator, vector_store
 from app.utils.metrics import metrics_collector
 import structlog
 

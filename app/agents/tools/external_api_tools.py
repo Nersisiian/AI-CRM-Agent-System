@@ -1,3 +1,4 @@
+﻿import json
 from app.integrations.crm_connector import CRMConnector
 
 class ExternalAPITools:

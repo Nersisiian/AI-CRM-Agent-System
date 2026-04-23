@@ -1,11 +1,10 @@
-from typing import Dict, Any, List
+from typing import Dict, Any
 import structlog
 from app.agents.tools.crm_tools import CRMTools
 from app.rag.retrieval import RetrievalPipeline
 from app.core.memory import MemoryManager
 from app.services.llm_factory import get_llm_service
 from config import settings
-import json
 
 logger = structlog.get_logger(__name__)
 

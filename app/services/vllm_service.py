@@ -1,7 +1,8 @@
-from openai import AsyncOpenAI
+﻿from openai import AsyncOpenAI
 from config import settings
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 import openai
+from app.services.openai_service import OpenAIService
 
 class VLLMService:
     def __init__(self):
@@ -26,5 +27,5 @@ class VLLMService:
         )
 
     async def get_embedding(self, text: str):
-        # Можно использовать эмбеддинги через OpenAI или отдельный сервис
-        return await OpenAIService().get_embedding(text)
+        svc = OpenAIService()
+        return await svc.get_embedding(text)

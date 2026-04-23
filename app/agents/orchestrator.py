@@ -1,4 +1,3 @@
-import asyncio
 import structlog
 from app.agents.sales_agent import SalesAgent
 from app.agents.support_agent import SupportAgent
