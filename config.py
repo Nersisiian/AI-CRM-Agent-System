@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+﻿from pydantic_settings import BaseSettings, SettingsConfigDict
 from enum import Enum
 from typing import Optional
 
@@ -11,6 +11,8 @@ class VectorStoreType(str, Enum):
     QDRANT = "qdrant"
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
     # LLM
     LLM_PROVIDER: LLMProvider = LLMProvider.OPENAI
     VLLM_ENDPOINT: str = "http://localhost:8001/v1"
@@ -39,7 +41,7 @@ class Settings(BaseSettings):
     REDIS_PORT: int = 6379
     REDIS_URL: str = "redis://localhost:6379/0"
 
-    # CRM Integration (real)
+    # CRM Integration
     CRM_BASE_URL: str = "https://example.kommo.com"
     CRM_API_KEY: str = ""
 
@@ -52,10 +54,6 @@ class Settings(BaseSettings):
     # Fine-tuning
     TRAINING_DATA_PATH: str = "./data/training/sales_conversations.jsonl"
     LORA_OUTPUT_DIR: str = "./models/lora-adapters"
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
